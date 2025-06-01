@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   plugins: ['~/plugins/axios', '~/plugins/auth-init.client'],
   modules: [
     '@pinia/nuxt',
-    '@nuxt/test-utils/module'
 
   ],
   css: ['~/assets/css/main.css']
