@@ -1,0 +1,135 @@
+// import { defineStore } from 'pinia';
+// import { ref, computed } from 'vue';
+
+// // Definisikan tipe Post (cocokkan dengan schema.ts)
+// export interface Post {
+//   id: number;
+//   title: string;
+//   content: string;
+//   createdAt: string; // atau Date
+//   updatedAt: string; // atau Date
+// }
+
+// export const usePostStore = defineStore('post', () => {
+//   const posts = ref<Post[]>([]);
+//   const currentPost = ref<Post | null>(null);
+//   const loading = ref<boolean>(false);
+//   const error = ref<string | null>(null);
+
+//   const getPosts = computed(() => posts.value);
+//   const getCurrentPost = computed(() => currentPost.value);
+//   const isLoading = computed(() => loading.value);
+//   const getError = computed(() => error.value);
+
+//   async function fetchPosts() {
+//     loading.value = true;
+//     error.value = null;
+//     try {
+//       const data = await $fetch<Post[]>('/api/posts');
+//       posts.value = data;
+//     } catch (e: any) {
+//       error.value = e.data?.message || e.message || 'Failed to fetch posts';
+//       console.error(error.value);
+//     } finally {
+//       loading.value = false;
+//     }
+//   }
+
+//   async function fetchPostById(id: number) {
+//     loading.value = true;
+//     error.value = null;
+//     currentPost.value = null;
+//     try {
+//       const data = await $fetch<Post>(`/api/posts/${id}`);
+//       currentPost.value = data;
+//       return data; // Kembalikan data untuk penggunaan langsung jika perlu
+//     } catch (e: any) {
+//       error.value = e.data?.message || e.message || `Failed to fetch post ${id}`;
+//       console.error(error.value);
+//       return null;
+//     } finally {
+//       loading.value = false;
+//     }
+//   }
+
+//   async function createPost(postData: { title: string; content: string }) {
+//     loading.value = true;
+//     error.value = null;
+//     try {
+//       const newPost = await $fetch<Post>('/api/posts', {
+//         method: 'POST',
+//         body: postData,
+//       });
+//       posts.value.unshift(newPost); // Tambahkan ke awal list
+//       return newPost;
+//     } catch (e: any) {
+//       error.value = e.data?.message || e.data?.data?.[0]?.message || e.message || 'Failed to create post';
+//       console.error(error.value);
+//       return null;
+//     } finally {
+//       loading.value = false;
+//     }
+//   }
+
+//   async function updatePost(id: number, postData: { title?: string; content?: string }) {
+//     loading.value = true;
+//     error.value = null;
+//     try {
+//       const updatedPost = await $fetch<Post>(`/api/posts/${id}`, {
+//         method: 'PUT',
+//         body: postData,
+//       });
+//       // Update di list posts
+//       const index = posts.value.findIndex(p => p.id === id);
+//       if (index !== -1) {
+//         posts.value[index] = updatedPost;
+//       }
+//       // Update currentPost jika itu yang diedit
+//       if (currentPost.value && currentPost.value.id === id) {
+//         currentPost.value = updatedPost;
+//       }
+//       return updatedPost;
+//     } catch (e: any) {
+//       error.value = e.data?.message || e.data?.data?.[0]?.message || e.message || 'Failed to update post';
+//       console.error(error.value);
+//       return null;
+//     } finally {
+//       loading.value = false;
+//     }
+//   }
+
+//   async function deletePost(id: number) {
+//     loading.value = true;
+//     error.value = null;
+//     try {
+//       await $fetch(`/api/posts/${id}`, { method: 'DELETE' });
+//       posts.value = posts.value.filter(p => p.id !== id);
+//       if (currentPost.value && currentPost.value.id === id) {
+//         currentPost.value = null;
+//       }
+//       return true;
+//     } catch (e: any) {
+//       error.value = e.data?.message || e.message || 'Failed to delete post';
+//       console.error(error.value);
+//       return false;
+//     } finally {
+//       loading.value = false;
+//     }
+//   }
+
+//   return {
+//     posts,
+//     currentPost,
+//     loading,
+//     error,
+//     getPosts,
+//     getCurrentPost,
+//     isLoading,
+//     getError,
+//     fetchPosts,
+//     fetchPostById,
+//     createPost,
+//     updatePost,
+//     deletePost,
+//   };
+// });
